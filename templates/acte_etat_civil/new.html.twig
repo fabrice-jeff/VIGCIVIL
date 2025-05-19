@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ActeEtatCivil{% endblock %}
+
+{% block body %}
+    <h1>Create new ActeEtatCivil</h1>
+
+    {{ include('acte_etat_civil/_form.html.twig') }}
+
+    <a href="{{ path('app_acte_etat_civil_index') }}">back to list</a>
+{% endblock %}

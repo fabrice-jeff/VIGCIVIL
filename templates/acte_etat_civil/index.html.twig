@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ActeEtatCivil index{% endblock %}
+
+{% block body %}
+    <h1>ActeEtatCivil index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NumeroActe</th>
+                <th>Prenoms</th>
+                <th>DateNaissance</th>
+                <th>LieuNaissance</th>
+                <th>NomPere</th>
+                <th>NomMere</th>
+                <th>TypeActe</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for acte_etat_civil in acte_etat_civils %}
+            <tr>
+                <td>{{ acte_etat_civil.id }}</td>
+                <td>{{ acte_etat_civil.numeroActe }}</td>
+                <td>{{ acte_etat_civil.prenoms }}</td>
+                <td>{{ acte_etat_civil.dateNaissance ? acte_etat_civil.dateNaissance|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ acte_etat_civil.lieuNaissance }}</td>
+                <td>{{ acte_etat_civil.nomPere }}</td>
+                <td>{{ acte_etat_civil.nomMere }}</td>
+                <td>{{ acte_etat_civil.typeActe }}</td>
+                <td>
+                    <a href="{{ path('app_acte_etat_civil_show', {'id': acte_etat_civil.id}) }}">show</a>
+                    <a href="{{ path('app_acte_etat_civil_edit', {'id': acte_etat_civil.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_acte_etat_civil_new') }}">Create new</a>
+{% endblock %}

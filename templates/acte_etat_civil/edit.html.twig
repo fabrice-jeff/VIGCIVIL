@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ActeEtatCivil{% endblock %}
+
+{% block body %}
+    <h1>Edit ActeEtatCivil</h1>
+
+    {{ include('acte_etat_civil/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_acte_etat_civil_index') }}">back to list</a>
+
+    {{ include('acte_etat_civil/_delete_form.html.twig') }}
+{% endblock %}
