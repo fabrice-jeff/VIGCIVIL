@@ -1,11 +1,96 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New User{% endblock %}
+{% block title %}Ajouter un utilisateur{% endblock %}
 
-{% block body %}
-    <h1>Create new User</h1>
+{% block content %}
 
-    {{ include('user/_form.html.twig') }}
+    <div id="new-user" class="container section">
+        <div class="section-header">
+            <a href="" class="section-button-back" type="button" aria-expanded="false">
+                <i class="bx bx-chevron-left"></i>
+                <span>Retour</span>
+            </a>
+            <h3 class="d-block navbar-title pt-3 ">Ajouter un utilisateur</h3>
+            <hr>
+        </div>
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.matricule) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.nom) }}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    {{ form_row(form.prenoms)}}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.email)}}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    {{ form_row(form.fonction)}}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.password)}}
+                </div>
+            </div>
+            <div class="mt-2">
+                <button class="action-button" type="submit" aria-expanded="false">
+                    <i class="bx bx-plus"></i>
+                    <span>Ajouter le producteur</span>
+                </button>
+            </div>
+        {{ form_end(form) }}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    </div>
 {% endblock %}
+
+
+
+ {% block stylesheets %}
+     <style>
+
+         /* Section Producteur create
+         -------------------------------------------------- */
+         #new-user{
+             position: relative;
+             padding-right: 60px;
+             padding-left: 60px;
+             padding-top: 10px;
+             background: #FFFFFF;
+             height: 100%;
+         }
+
+         .section-header{
+
+         }
+         .section-header .section-button-back{
+             height: 24px;
+             gap: 8px;
+
+         }
+         .section-header .section-button-back i{
+             font-weight: 200;
+             color: #467241;
+             width: 24px;
+             height: 24px;
+             font-size: 24px;
+         }
+         .section-header .section-button-back span{
+             color: #467241;
+             font-weight: 500;
+             font-size: 13px;
+             line-height: 24px;
+             vertical-align: middle;
+         }
+
+         #new-user form  button.action-button{
+             border: none;
+             margin-bottom: 30px;
+         }
+     </style>
+ {% endblock %}

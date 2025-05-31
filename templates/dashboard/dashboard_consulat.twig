@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+{% block _header %}
+    {{ include('partials/_header_dashboard.html.twig') }}
+{% endblock %}
+
+{% block title %}
+    Ma page d'accueil
+{% endblock %}
+{% block content %}
+    <div id="statistique" class="section container-xxl flex-grow-1 container-p-y">
+        <h3 class="section-title">
+            Statistiques
+        </h3>
+        <div class="d-flex justify-content-between row">
+            <div class="statistique-item capteurs">
+                <div class="container row d-flex align-items-center ">
+                    <div class="icon col-3">
+                        <i class="bx bx-alarm"></i>
+                    </div>
+                    <div class="col-8">
+                        <p>Historique des demandes</p>
+                    </div>
+                </div>
+            </div>
+            <div class=" statistique-item producteurs">
+                <div class="container row d-flex align-items-center">
+                    <div class="icon col-3">
+                        <i class="bx bx-alarm"></i>
+                    </div>
+                    <div class="col-8">
+                        <p>Demandes en attente de traitement</p>
+                    </div>
+                </div>
+            </div>
+            <div class=" statistique-item producteurs">
+                <div class="container row d-flex align-items-center">
+                    <div class="icon col-3">
+                        <i class="bx bx-alarm"></i>
+                    </div>
+                    <div class="col-8">
+                        <p>Demande traités en semaine</p>
+                    </div>
+                </div>
+            </div>
+            <div class=" statistique-item producteurs">
+                <div class="container row d-flex align-items-center">
+                    <div class="icon col-3">
+                        <i class="bx bx-alarm"></i>
+                    </div>
+                    <div class="col-8">
+                        <p> Demandes clôturées en semaine</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Section Statistique
+    -------------------------------------------------- */
+
+        #statistique.section {
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        #statistique .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        #statistique div .statistique-item {
+            margin-bottom: 20px;
+            position: relative;
+            background: #FFFFFF;
+            border-radius: 6px;
+            width: 49%;
+            padding: 5px 0;
+            display: flex;
+            align-content: center;
+            border:2px solid #595cd9;
+
+        }
+
+
+        #statistique div .statistique-item .icon{
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            color: #FFFFFF;
+            background: #595cd9;
+            border:2px solid #595cd9;
+        }
+
+        #statistique div .statistique-item.responsables .icon{
+            border:2px solid #007bff;
+            background: #007bff;
+        }
+
+        #statistique div .statistique-item .icon i {
+            font-size: 25px;
+            display: block;
+        }
+        #statistique div .statistique-item .container p,  #statistique div .statistique-item .container h5{
+            margin: 1px;
+            padding: 0;
+        }
+        #statistique div .statistique-item .container h5{
+            font-size: 13px;
+        }
+
+        #statistique div .statistique-item .container p{
+            font-size: 20px;
+            font-weight: 600;
+        }
+    </style>
+{% endblock %}
+

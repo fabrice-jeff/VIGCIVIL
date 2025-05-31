@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+{% block _header %}
+    {{ include('partials/_header_dashboard.html.twig') }}
+{% endblock %}
+
+{% block title %}
+    Ma page d'accueil
+{% endblock %}
+{% block content %}
+    <div id="statistique" class="section container-xxl flex-grow-1 container-p-y">
+        <h3 class="section-title">
+            Statistiques
+        </h3>
+        <div class="d-flex justify-content-between ">
+            <div class=" statistique-item capteurs">
+                <div class="container row d-flex align-items-center ">
+                    <div class="icon col-3">
+                        <i class="bx bx-alarm"></i>
+                    </div>
+                    <div class="col-8">
+                        <h5>Nombre de demande</h5>
+                        <p>1000</p>
+                    </div>
+                </div>
+            </div>
+            <div class=" statistique-item producteurs">
+                <div class="container row d-flex align-items-center ">
+                    <div class="icon col-3">
+                        <i class="bx bx-alarm"></i>
+                    </div>
+                    <div class="col-8">
+                        <h5>Nombre d'agent</h5>
+                        <p>500</p>
+                    </div>
+                </div>
+            </div>
+            <div class=" statistique-item responsables">
+                <div class="container row d-flex align-items-center ">
+                    <div class="icon col-3">
+                        <i class="bx bx-alarm"></i>
+                    </div>
+                    <div class="col-8 ">
+                        <h5>Nombre de ministère</h5>
+                        <p>500</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" mt-3 mb-4">
+            <div class="card">
+                <div class="row row-bordered">
+                    <div class="col-md-12 p-4">
+                        <h5 class="card-header m-0 me-2 pb-4">
+                            Liste des utilisateurs
+                        </h5>
+                        <div class="container mb-3">
+                            <table class="table table-bordered">
+                                <thead class="">
+                                <tr>
+                                    <th>Matricule</th>
+                                    <th>Nom</th>
+                                    <th>Prénoms</th>
+                                    <th>Type</th>
+                                    <th>Date d'ajout</th>
+                                    <th>Statut</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td>{{ user.matricule }}</td>
+                                        <td>{{ user.nom }}</td>
+                                        <td>{{ user.prenoms }}</td>
+                                        <td>{{  user.email }}</td>
+                                        <td>22-10-2010</td>
+                                        <td>actif</td>
+                                        <td class=" "> <i class="d-block text-center bx bx-dots-horizontal-rounded"></i></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="container ">
+                            <a href="{{ path('app_user_new') }}" class="action-button float-end">
+                                <i class="bx bx-plus"></i>
+                                <span>Ajouter un utilisateur</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Section Statistique
+    -------------------------------------------------- */
+
+        #statistique.section {
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        #statistique .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        #statistique div .statistique-item {
+            position: relative;
+            background: #FFFFFF;
+            border-radius: 6px;
+            width: 32%;
+            padding: 5px 0px;
+        }
+
+        #statistique div .statistique-item.capteurs{
+            border:2px solid #595cd9;
+        }
+
+        #statistique div .statistique-item.producteurs{
+            border:2px solid #20c997;
+        }
+
+        #statistique div .statistique-item.responsables{
+            border:2px solid #007bff;
+        }
+
+        #statistique div .statistique-item .icon{
+            padding: 10px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            color: #FFFFFF;
+        }
+
+        #statistique div .statistique-item.capteurs .icon{
+            background: #595cd9;
+            border:2px solid #595cd9;
+        }
+        #statistique div .statistique-item.producteurs .icon{
+            background: #20c997;
+            border:2px solid #20c997;
+        }
+        #statistique div .statistique-item.responsables .icon{
+            border:2px solid #007bff;
+            background: #007bff;
+        }
+
+        #statistique div .statistique-item .icon i {
+            font-size: 20px;
+        }
+        #statistique div .statistique-item .container p,  #statistique div .statistique-item .container h5{
+            margin: 1px;
+            padding: 0;
+        }
+        #statistique div .statistique-item .container h5{
+            font-size: 13px;
+        }
+
+        #statistique div .statistique-item .container p{
+            font-size: 25px;
+            font-weight: 600;
+        }
+    </style>
+{% endblock %}
+

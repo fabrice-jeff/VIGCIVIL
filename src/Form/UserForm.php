@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,12 +14,19 @@ class UserForm extends AbstractType
     {
         $builder
             ->add('matricule')
-            ->add('roles')
             ->add('password')
             ->add('nom')
             ->add('prenoms')
             ->add('email')
-            ->add('fonction')
+            ->add('fonction', ChoiceType::class, [
+                'choices' => [
+                    'Agent' => 'agent',
+                    'Particulier' => 'particulier',
+                ],
+                'expanded' => false,
+                'multiple' => false,
+                'placeholder' => 'Choisissez une option',
+            ])
         ;
     }
 
