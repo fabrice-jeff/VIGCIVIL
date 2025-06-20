@@ -18,7 +18,7 @@
 
 
 {% block _header %}
-    {{ include('partials/_header_dashboard.html.twig', { title : "Demandes"}) }}
+    {{ include('partials/_header_dashboard.html.twig', { title : "Demandes en attente de traitement"}) }}
 {% endblock %}
 {% block title %}Demande index{% endblock %}
 
@@ -59,40 +59,47 @@
                                     <th>Réference</th>
                                     <th>Numéro de l'acte</th>
                                     <th>Date de demande</th>
-                                    <th>Statut</th>
+                                    <th>Acte</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                    {% for demande in demandes %}
-                                        <tr>
-                                            <td>{{ demande.reference }}</td>
-                                            <td> N°{{ demande.numeroActe.numeroActe }}</td>
-                                            <td>{{ demande.dateSoumission | date("d/m/Y") }}</td>
-                                            <td class=" status">
-                                                <div class="active">{{ demande.status.libelle }}</div>
-                                            </td>
-                                            <td>
-                                                <div class="dropdown" >
-                                                    <i class="d-block dropdown-toggle text-center bx bx-dots-horizontal-rounded" data-bs-toggle="dropdown"></i>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#">Détails</a></li>
+                                {% for demande in demandes %}
+                                    <tr>
+                                        <td>{{ demande.reference }}</td>
+                                        <td> N°{{ demande.numeroActe.numeroActe }}</td>
+                                        <td>{{ demande.dateSoumission | date("d/m/Y") }}</td>
+                                        <td>
+                                            <a href="" download="{{ asset('assets/uploads/'~ demande.numeroActe.copiePdf) }}"><i class="bx bx-show"></i></a>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown" >
+                                                <i class="d-block dropdown-toggle text-center bx bx-dots-horizontal-rounded" data-bs-toggle="dropdown"></i>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="{{ path('app_demande_show',{ id :demande.id }) }}">Détails</a></li>
+                                                    {% if app.user.roles[0] == 'ROLE_CONSULAT' %}
                                                         <li><a class="dropdown-item">Annuler</a></li>
                                                         <li><a class="dropdown-item" >Commenter</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+                                                    {% elseif app.user.roles[0] == 'ROLE_AGENT' %}
+                                                        <li><a class="dropdown-item" >Valider</a></li>
+                                                        <li><a class="dropdown-item">Refuser</a></li>
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
-                        <div class="container ">
-                            <a href="{{ path('app_demande_new') }}" class="action-button float-end">
-                                <i class="bx bx-plus"></i>
-                                <span>Soumettre une nouvelle demande</span>
-                            </a>
-                        </div>
+                        {% if(app.user.roles[0] == 'ROLE_CONSULAT') %}
+                            <div class="container ">
+                                <a href="{{ path('app_demande_new') }}" class="action-button float-end">
+                                    <i class="bx bx-plus"></i>
+                                    <span>Soumettre une nouvelle demande</span>
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -109,10 +116,10 @@
                             <span>Soumettre une demande</span>
                         </a>
                     </div>
-                    {% else %}
-                        <div class="container">
-                            <p class="">Aucune demande soumise</p>
-                        </div>
+                {% else %}
+                    <div class="container">
+                        <p class="">Aucune demande soumise</p>
+                    </div>
 
                 {% endif %}
 

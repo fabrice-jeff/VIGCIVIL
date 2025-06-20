@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\ActeEtatCivilRepository;
+use App\Utils\TraitClasses\EntityTimestampableTrait;
+use App\Utils\TraitClasses\EntityUserOperation;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActeEtatCivilRepository::class)]
 class ActeEtatCivil
 {
+    use EntityUserOperation;
+    use EntityTimestampableTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,7 +36,14 @@ class ActeEtatCivil
     private ?string $nomMere = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $typeActe = null;
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $copiePdf = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypeActe $TypeActe = null;
 
     public function getId(): ?int
     {
@@ -111,14 +122,39 @@ class ActeEtatCivil
         return $this;
     }
 
-    public function getTypeActe(): ?string
+
+    public function getNom(): ?string
     {
-        return $this->typeActe;
+        return $this->nom;
     }
 
-    public function setTypeActe(string $typeActe): static
+    public function setNom(string $nom): static
     {
-        $this->typeActe = $typeActe;
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getCopiePdf(): ?string
+    {
+        return $this->copiePdf;
+    }
+
+    public function setCopiePdf(string $copiePdf): static
+    {
+        $this->copiePdf = $copiePdf;
+
+        return $this;
+    }
+
+    public function getTypeActe(): ?TypeActe
+    {
+        return $this->TypeActe;
+    }
+
+    public function setTypeActe(?TypeActe $TypeActe): static
+    {
+        $this->TypeActe = $TypeActe;
 
         return $this;
     }

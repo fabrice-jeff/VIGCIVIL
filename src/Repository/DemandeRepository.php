@@ -16,6 +16,20 @@ class DemandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Demande::class);
     }
 
+    public function findDemandeTraitees($statusEnAttente, $statusEnCours): array
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.deleted = false')
+            ->andWhere('d.status = :statusEnAttente')
+            ->andWhere('d.status = :statusEnCours')
+            ->setParameter('statusEnAttente', $statusEnAttente)
+            ->setParameter('statusEnCours', $statusEnCours)
+            ->orderBy('d.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     //    /**
     //     * @return Demande[] Returns an array of Demande objects
     //     */

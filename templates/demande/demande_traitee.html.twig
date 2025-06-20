@@ -18,7 +18,7 @@
 
 
 {% block _header %}
-    {{ include('partials/_header_dashboard.html.twig', { title : "Demandes"}) }}
+    {{ include('partials/_header_dashboard.html.twig', { title : "Demandes traitées"}) }}
 {% endblock %}
 {% block title %}Demande index{% endblock %}
 
@@ -59,39 +59,33 @@
                                     <th>Réference</th>
                                     <th>Numéro de l'acte</th>
                                     <th>Date de demande</th>
-                                    <th>Statut</th>
+                                    <th>Acte</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                    {% for demande in demandes %}
-                                        <tr>
-                                            <td>{{ demande.reference }}</td>
-                                            <td> N°{{ demande.numeroActe.numeroActe }}</td>
-                                            <td>{{ demande.dateSoumission | date("d/m/Y") }}</td>
-                                            <td class=" status">
-                                                <div class="active">{{ demande.status.libelle }}</div>
-                                            </td>
-                                            <td>
-                                                <div class="dropdown" >
-                                                    <i class="d-block dropdown-toggle text-center bx bx-dots-horizontal-rounded" data-bs-toggle="dropdown"></i>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#">Détails</a></li>
-                                                        <li><a class="dropdown-item">Annuler</a></li>
-                                                        <li><a class="dropdown-item" >Commenter</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+                                {% for demande in demandes %}
+                                    <tr>
+                                        <td>{{ demande.reference }}</td>
+                                        <td> N°{{ demande.numeroActe.numeroActe }}</td>
+                                        <td>{{ demande.dateSoumission | date("d/m/Y") }}</td>
+                                        <td>
+                                            <a href="" download="{{ asset('assets/uploads/'~ demande.numeroActe.copiePdf) }}"><i class="bx bx-show"></i></a>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown" >
+                                                <i class="d-block dropdown-toggle text-center bx bx-dots-horizontal-rounded" data-bs-toggle="dropdown"></i>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#">Détails</a></li>
+                                                    <li><a class="dropdown-item">Annuler</a></li>
+                                                    <li><a class="dropdown-item" >Commenter</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="container ">
-                            <a href="{{ path('app_demande_new') }}" class="action-button float-end">
-                                <i class="bx bx-plus"></i>
-                                <span>Soumettre une nouvelle demande</span>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -99,22 +93,9 @@
         {% else %}
             <div class="align-items-center d-flex flex-column justify-content-center text-center no-data">
                 <img src="{{ asset('assets/img/Frame 4455.png') }}" class="img-fluid " width="300vw" height="300vw" alt="">
-                {% if app.user.roles[0] == "ROLE_CONSULAT" %}
-                    <div class="container">
-                        <p class="">Vous n'avez ajouté aucun capteur pour le moment,<br> cliquez sur le bouton pour ajouter</p>
-                    </div>
-                    <div>
-                        <a href="{{ path('app_demande_new') }}" class="action-button" type="button">
-                            <i class="bx bx-plus"></i>
-                            <span>Soumettre une demande</span>
-                        </a>
-                    </div>
-                    {% else %}
-                        <div class="container">
-                            <p class="">Aucune demande soumise</p>
-                        </div>
-
-                {% endif %}
+                <div class="container">
+                    <p class="">Aucune demande traitée</p>
+                </div>
 
             </div>
         {% endif %}

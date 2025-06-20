@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+{% block _header %}
+    {{ include('partials/_header_dashboard.html.twig', { title : "Tableau de bord"}) }}
+{% endblock %}
+
+{% block title %}
+    Ma page d'accueil
+{% endblock %}
+{% block content %}
+    <div  class="section container flex-grow-1 container-p-y ">
+        <h3 class="section-title">
+            Statistiques des demandes de l'agent du ministère
+        </h3>
+        <div class="d-flex justify-content-between">
+            <div class="col-3">
+                <a href="{{ path('app_demande_en_attente_traitement') }}" class="card item">
+                    <div class="item-header">
+                        <div class="icon col-4">
+                            <i class="bx bx-news"></i>
+                        </div>
+                        <p class="number">{{ demandesEnAttente | length }}</p>
+                    </div>
+                    <p>Demandes en attente de traitement</p>
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="{{ path('app_demande_traitee') }}" class="card item">
+                    <div class="item-header">
+                        <div class="icon col-4">
+                            <i class="bx bx-news"></i>
+                        </div>
+                        <p class="number">{{ demandesTraitees | length }}</p>
+                    </div>
+                    <p>Demandes traitées</p>
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="" class="card item">
+                    <div class="item-header">
+                        <div class="icon col-4">
+                            <i class="bx bx-news"></i>
+                        </div>
+                        <p class="number">300</p>
+                    </div>
+                    <p>Demandes en attente de validation</p>
+                </a>
+            </div>
+        </div>
+        <div class=" mt-3 mb-4">
+            <div class="card">
+                <div class="row row-bordered">
+                    <div class="col-md-12 p-4">
+                        <h5 class="card-header m-0 me-2 pb-4">
+                            Dernières demandes en attente de traitement
+                        </h5>
+                        <div class="container mb-3">
+                            <table class="table table-bordered">
+                                <thead class="">
+                                <tr class="text-center">
+                                    <th>Réference</th>
+                                    <th>Numéro de l'acte</th>
+                                    <th>Date de demande</th>
+                                    <th>Acte</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                {% for demande in demandesEnAttente %}
+                                    <tr>
+                                        <td>{{ demande.reference }}</td>
+                                        <td> N°{{ demande.numeroActe.numeroActe }}</td>
+                                        <td>{{ demande.dateSoumission | date("d/m/Y") }}</td>
+                                        <td>
+                                            <a href="" download="{{ asset('assets/uploads/'~ demande.numeroActe.copiePdf) }}"><i class="bx bx-show"></i></a>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown" >
+                                                <i class="d-block dropdown-toggle text-center bx bx-dots-horizontal-rounded" data-bs-toggle="dropdown"></i>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#">Détails</a></li>
+                                                    <li><a class="dropdown-item">Annuler</a></li>
+                                                    <li><a class="dropdown-item" >Commenter</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="container ">
+                            <a href="{{ path('app_demande_en_attente_traitement') }}" class="action-button float-end">
+                                <i class="bx bx-plus"></i>
+                                <span>Voir plus</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        a.item.card{
+            max-height: 120px;
+            padding: 10px 25px;
+        }
+
+        a.item.card div.icon{
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border: 1px solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        div.item-header{
+            display: flex;
+            justify-content: space-between;
+        }
+        p.number{
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .dropdown-toggle::after {
+            display: none !important;
+        }
+    </style>
+{% endblock %}
+

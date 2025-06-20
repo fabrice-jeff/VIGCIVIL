@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block _header %}
-    {{ include('partials/_header_dashboard.html.twig') }}
+    {{ include('partials/_header_dashboard.html.twig', { title : "Tableau de bord"}) }}
 {% endblock %}
 
 {% block title %}
@@ -72,9 +72,11 @@
                                         <td>{{ user.matricule }}</td>
                                         <td>{{ user.nom }}</td>
                                         <td>{{ user.prenoms }}</td>
-                                        <td>{{  user.email }}</td>
+                                        <td>{{  user.fonction }}</td>
                                         <td>22-10-2010</td>
-                                        <td>actif</td>
+                                        <td class="status">
+                                            <div class="{{ user.active ? 'active' : 'inactive' }}">{{  user.active ? "Actif" : "Inactif" }}</div>
+                                        </td>
                                         <td class=" "> <i class="d-block text-center bx bx-dots-horizontal-rounded"></i></td>
                                     </tr>
                                 {% endfor %}

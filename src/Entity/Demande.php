@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\DemandeRepository;
+use App\Utils\TraitClasses\EntityTimestampableTrait;
+use App\Utils\TraitClasses\EntityUserOperation;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DemandeRepository::class)]
 class Demande
 {
+    use EntityUserOperation;
+    use EntityTimestampableTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -16,23 +20,24 @@ class Demande
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $numeroActe = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTime $dateSoumission = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $statut = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $copiePdf = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTime $dateTraitement = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lieuTraitement = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ActeEtatCivil $numeroActe = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Status $status = null;
 
     public function getId(): ?int
     {
@@ -51,17 +56,6 @@ class Demande
         return $this;
     }
 
-    public function getNumeroActe(): ?string
-    {
-        return $this->numeroActe;
-    }
-
-    public function setNumeroActe(string $numeroActe): static
-    {
-        $this->numeroActe = $numeroActe;
-
-        return $this;
-    }
 
     public function getDateSoumission(): ?\DateTime
     {
@@ -71,30 +65,6 @@ class Demande
     public function setDateSoumission(?\DateTime $dateSoumission): static
     {
         $this->dateSoumission = $dateSoumission;
-
-        return $this;
-    }
-
-    public function getStatut(): ?string
-    {
-        return $this->statut;
-    }
-
-    public function setStatut(string $statut): static
-    {
-        $this->statut = $statut;
-
-        return $this;
-    }
-
-    public function getCopiePdf(): ?string
-    {
-        return $this->copiePdf;
-    }
-
-    public function setCopiePdf(string $copiePdf): static
-    {
-        $this->copiePdf = $copiePdf;
 
         return $this;
     }
@@ -119,6 +89,30 @@ class Demande
     public function setLieuTraitement(?string $lieuTraitement): static
     {
         $this->lieuTraitement = $lieuTraitement;
+
+        return $this;
+    }
+
+    public function getNumeroActe(): ?ActeEtatCivil
+    {
+        return $this->numeroActe;
+    }
+
+    public function setNumeroActe(?ActeEtatCivil $numeroActe): static
+    {
+        $this->numeroActe = $numeroActe;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

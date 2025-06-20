@@ -2,49 +2,186 @@
 
 {% block title %}Demande{% endblock %}
 
-{% block body %}
-    <h1>Demande</h1>
+{% block content %}
+    <div   class="container section flex-grow-1 container-p-y ">
+        <div class="section-header">
+            <a href="{{ path('app_demande_en_attente_traitement') }}" class="section-button-back" type="button" aria-expanded="false">
+                <i class="bx bx-chevron-left"></i>
+                <span>Retour</span>
+            </a>
+            <h3 class="d-block navbar-title pt-3 ">Reférence # {{ demande.reference }}</h3>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card p-4">
+                    <div class="d-flex justify-content-between">
+                        <h4>Informations personnelles</h4>
+                        <div id="download">
+                            <a href="" download="{{ asset('assets/uploads/'~ demande.numeroActe.copiePdf) }}"><i class="bx bx-download"></i></a>
+                        </div>
+                    </div>
+                    <div class="border-top pt-4">
+                        <ul class="list-inline mb-0">
+                            <li class="clearfix text-muted border-bottom pb-3">
+                                <div class="float-left">Nom</div>
+                                <div class="float-right">
+                                    <h5 class="f-13 mb-0">{{ demande.numeroActe.nom }}</h5>
+                                </div>
+                            </li>
+                            <li class="clearfix text-muted border-bottom pb-3">
+                                <div class="float-left">Prénom(s)</div>
+                                <div class="float-right">
+                                    <h5 class="f-13 mb-0">{{ demande.numeroActe.prenoms }}</h5>
+                                </div>
+                            </li>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ demande.id }}</td>
-            </tr>
-            <tr>
-                <th>Reference</th>
-                <td>{{ demande.reference }}</td>
-            </tr>
-            <tr>
-                <th>NumeroActe</th>
-                <td>{{ demande.numeroActe }}</td>
-            </tr>
-            <tr>
-                <th>DateSoumission</th>
-                <td>{{ demande.dateSoumission ? demande.dateSoumission|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>{{ demande.statut }}</td>
-            </tr>
-            <tr>
-                <th>CopiePdf</th>
-                <td>{{ demande.copiePdf }}</td>
-            </tr>
-            <tr>
-                <th>DateTraitement</th>
-                <td>{{ demande.dateTraitement ? demande.dateTraitement|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>LieuTraitement</th>
-                <td>{{ demande.lieuTraitement }}</td>
-            </tr>
-        </tbody>
-    </table>
+                            <li class="clearfix text-muted border-bottom pb-3">
+                                <div class="float-left">Date de Naissance</div>
+                                <div class="float-right">
+                                    <h5 class="f-13 mb-0">{{ demande.numeroActe.dateNaissance | date('d/m/Y') }}</h5>
+                                </div>
+                            </li>
+                            <li class="clearfix text-muted border-bottom pb-3">
+                                <div class="float-left">Lieu de Naissance</div>
+                                <div class="float-right">
+                                    <h5 class="f-13 mb-0">{{ demande.numeroActe.lieuNaissance }}</h5>
+                                </div>
+                            </li>
 
-    <a href="{{ path('app_demande_index') }}">back to list</a>
+                            <li class="clearfix text-muted border-bottom pb-3">
+                                <div class="float-left">Nom et Prénom(s) de père</div>
+                                <div class="float-right">
+                                    <h5 class="f-13 mb-0">{{ demande.numeroActe.nomPere }}</h5>
+                                </div>
+                            </li>
 
-    <a href="{{ path('app_demande_edit', {'id': demande.id}) }}">edit</a>
+                            <li class="clearfix text-muted border-bottom pb-3">
+                                <div class="float-left">Nom et Prénom(s) de mère</div>
+                                <div class="float-right">
+                                    <h5 class="f-13 mb-0">{{ demande.numeroActe.nomMere }}</h5>
+                                </div>
+                            </li>
 
-    {{ include('demande/_delete_form.html.twig') }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card p-4">
+                    <h4>Informations sur la demande</h4>
+                    <div class="border-top pt-4">
+                        <ul class="list-inline mb-0">
+                            <li class="clearfix text-muted border-bottom pb-3">
+                                <div class="float-left">Statut</div>
+                                <div class="float-right">
+                                    <h5 class="f-13 mb-0 {{ color_status(demande.status) }}" id="status"> {{ demande.status.libelle}}</h5>
+                                </div>
+                            </li>
+                            {% if app.user.roles[0] == "ROLE_AGENT" and demande.status.reference == "STATUS_DEMANDE_SOUMISE" %}
+                                <li class="clearfix text-muted border-bottom pb-3 p-3">
+                                    <div class="float-right row">
+                                        <div class="col-6">
+                                            <a class="action-button" type="submit" id="valider">
+                                                <span>Valider</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a class="action-button" type="submit" id="rejeter">
+                                                <span>Rejeter</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
+
+
+ {% block stylesheets %}
+     <style>
+
+         .section-header .section-button-back{
+             height: 24px;
+             gap: 8px;
+
+         }
+         .section-header .section-button-back i{
+             font-weight: 200;
+             color: #467241;
+             width: 24px;
+             height: 24px;
+             font-size: 24px;
+         }
+         .section-header .section-button-back span{
+             color: #467241;
+             font-weight: 500;
+             font-size: 13px;
+             line-height: 24px;
+             vertical-align: middle;
+         }
+
+         #rejeter{
+             background : red;
+         }
+
+         #download{
+             background: var(--app-color-default);
+             width: 30px;
+             height: 30px;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             margin-bottom: 3px;
+             border-radius: 50%;
+         }
+         #download a{
+             color: #FFFFFF;
+             display: block;
+
+         }
+
+         #status.warning{
+             color: orange;
+         }
+
+         #status.danger{
+             color: red;
+         }
+
+         #status.success{
+             color: green;
+         }
+     </style>
+ {% endblock %}
+
+
+{% block script %}
+    <script>
+        $(function(){
+            $("#valider").click((event) => {
+                Swal.fire({
+                    title: 'Êtes-vous sûr de vouloir valider ?',
+                    text: "Cette action est irréversible !",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#198754',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Valider',
+                    cancelButtonText: 'Annuler'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log("Bonjour le monde de codeur")
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock %}
+

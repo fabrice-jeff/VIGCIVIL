@@ -9,11 +9,12 @@
 >
     {{ include('partials/_head.html.twig') }}
     <body>
-        <!-- Layout wrapper -->
-        <div class="layout-wrapper layout-content-navbar">
-            <div class="layout-container">
-                <div class="content-wrapper" id="login">
-                    <form method="post" id="form-login">
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <div class="content-wrapper" id="login">
+                <div class="login-box">
+                    <form method="POST">
+
                         {% if error %}
                             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                         {% endif %}
@@ -25,51 +26,77 @@
                         {% endif %}
 
                         <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-                        <div class="mt-2">
-                            <label for="inputMatricule">Matricule</label>
-                            <input type="text" value="{{ last_username }}" name="matricule" id="inputMatricule" class="form-control" autocomplete="username" required autofocus>
+                        <div class="form-group mb-3">
+                            <label for="inputEmail" class="form-label">Email/Téléphone</label>
+                            <input type="text" name="matricule" id="inputEmail" class="form-control"  autofocus>
                         </div>
-                        <div class="mt-2 mb-2">
-                            <label for="inputPassword">Password</label>
-                            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+                        <div class="form-group mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label for="inputPassword" class="form-label">Mot de passe</label>
+                                <a href="#" class="form-label forgot-password">Mot de passe oublié ?</a>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" >
+                                <span class="" onclick="togglePasswordVisibility()">
+                                  <i  id="eyeIcon" class='bx bx-show-alt'></i>
+                              </span>
+                            </div>
+                            <input type="hidden" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}"
+                            >
                         </div>
-                        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-                        <button class="btn btn-lg btn-primary" type="submit">
-                            se connecter
+                        <button class="action-button" type="submit">
+                            <span>Se connecter</span>
                         </button>
                     </form>
-                    <div class="content-backdrop fade"></div>
                 </div>
+                <div class="content-backdrop fade"></div>
             </div>
-
-            <!-- Overlay -->
-            <div class="layout-overlay layout-menu-toggle"></div>
         </div>
-        <!-- / Layout wrapper -->
 
-        <!-- Core JS -->
-        <!-- build:js assets/vendor/js/core.js -->
-        <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
-        <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
-        <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
-        <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
 
-        <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
-        <!-- endbuild -->
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
-        <!-- Vendors JS -->
-        <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
+    <!-- endbuild -->
 
-        <!-- Main JS -->
-        <script src="{{ asset('assets/js/main.js') }}"></script>
+    <!-- Vendors JS -->
+    <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 
-        <!-- Page JS -->
-        <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
-        <script src="{{ asset('assets/js/ui-modals.js') }}"></script>
+    <!-- Main JS -->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    <!-- Page JS -->
+    <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-modals.js') }}"></script>
 
 
-        <!-- Place this tag in your head or just before your close body tag. -->
-        <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById("inputPassword");
+            const eyeIcon = document.getElementById("eyeIcon");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
     </body>
 </html>
 

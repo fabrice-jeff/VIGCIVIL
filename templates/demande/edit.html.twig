@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
-
+{% block _header %}
+    {{ include('partials/_header_dashboard.html.twig') }}
+{% endblock %}
 {% block title %}Edit Demande{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Edit Demande</h1>
 
     {{ include('demande/_form.html.twig', {'button_label': 'Update'}) }}

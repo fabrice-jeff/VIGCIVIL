@@ -1,11 +1,165 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+        #insert-picture{
+            margin-top: 30px;
+            border-color: #d9dee3;
+            border-style: dashed ;
+            border-width: 3px;
+            border-spacing: 10px;
+            background: #F4F6F9;
+            border-radius:10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #insert-picture p{
+            font-weight: bold;
+            font-size: 18px;
+        }
+         .action-button{
+            margin-top: 20px;
+            border: none;
+        }
+
+
+        .section-header .section-button-back{
+            height: 24px;
+            gap: 8px;
+
+        }
+        .section-header .section-button-back i{
+            font-weight: 200;
+            color: #467241;
+            width: 24px;
+            height: 24px;
+            font-size: 24px;
+        }
+        .section-header .section-button-back span{
+            color: #467241;
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 24px;
+            vertical-align: middle;
+        }
+    </style>
+{% endblock %}
 
 {% block title %}New Demande{% endblock %}
 
-{% block body %}
-    <h1>Create new Demande</h1>
+{% block  content %}
+    <div  id="capteurs" class="container section flex-grow-1 container-p-y ">
+        <div class="section-header">
+            <a href="" class="section-button-back" type="button" aria-expanded="false">
+                <i class="bx bx-chevron-left"></i>
+                <span>Retour</span>
+            </a>
+            <h3 class="d-block navbar-title pt-3 ">Soumettre une demande</h3>
+            <hr>
+        </div>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.nom) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(form.prenoms) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(form.dateNaissance) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(form.lieuNaissance) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(form.nomPere) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(form.nomMere) }}
+            </div>
+        </div>
 
-    {{ include('demande/_form.html.twig') }}
+        <a  type="button" aria-expanded="false" data-bs-toggle="modal"
+           data-bs-target="#modalScrollable">
+            <div id="insert-picture" class="mb-4">
+                <div class="icon-download">
+                    <img src="{{ asset('assets/img/cloud-upload-outline.svg') }}" alt="">
+                </div>
+                <p >Ajouter l'acte d'état civil</p>
+            </div>
+        </a>
 
-    <a href="{{ path('app_demande_index') }}">back to list</a>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalScrollableTitle">Ajouter la pièce</h5>
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-start mb-1">
+                            {{ form_row(form.typeActe) }}
+                        </div>
+                        <div class="text-start mb-1">
+                            {{ form_row(form.numeroActe) }}
+                        </div>
+                        <div class="text-start mb-3">
+                            {{ form_row(form.copiePdf) }}
+                        </div>
+                        <div class="0">
+                            <button type="button" class="btn btn-primary" id="add" data-bs-dismiss="modal">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex  justify-content-center">
+            <button class="action-button" type="submit" id="add-demande">
+                <i class="bx bx-plus"></i>
+                <span>Soumettre la demande</span>
+            </button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function (){
+            $('#add').click(
+                e => {
+                    $('#insert-picture p').html("Fichier ajouté avec succès")
+                    $('#insert-picture p').css("color", 'green')
+                    $('#insert-picture').css('border-color', 'green');
+                }
+            )
+            // Ajout d'une demande
+            $('#add-demande').click((e) => {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Êtes-vous sûr de vouloir enregistrer ?',
+                    text: "Cette action est irréversible !",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#198754',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Enregistrer',
+                    cancelButtonText: 'Annuler'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('form').submit()
+                    }
+                })
+            })
+        })
+    </script>
 {% endblock %}

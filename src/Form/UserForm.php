@@ -20,8 +20,8 @@ class UserForm extends AbstractType
             ->add('email')
             ->add('fonction', ChoiceType::class, [
                 'choices' => [
-                    'Agent' => 'agent',
-                    'Particulier' => 'particulier',
+                    'Agent de ministère' => 'agent',
+                    'Agent du consulat' => 'particulier',
                 ],
                 'expanded' => false,
                 'multiple' => false,

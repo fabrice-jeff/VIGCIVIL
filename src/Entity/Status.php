@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\SignatureRepository;
+use App\Repository\StatusRepository;
 use App\Utils\TraitClasses\EntityTimestampableTrait;
 use App\Utils\TraitClasses\EntityUserOperation;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SignatureRepository::class)]
-class Signature
+#[ORM\Entity(repositoryClass: StatusRepository::class)]
+class Status
 {
     use EntityUserOperation;
     use EntityTimestampableTrait;
@@ -21,10 +21,7 @@ class Signature
     private ?string $reference = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $fonctionSignataire = null;
-
-    #[ORM\Column]
-    private ?\DateTime $dateSignature = null;
+    private ?string $libelle = null;
 
     public function getId(): ?int
     {
@@ -43,26 +40,14 @@ class Signature
         return $this;
     }
 
-    public function getFonctionSignataire(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->fonctionSignataire;
+        return $this->libelle;
     }
 
-    public function setFonctionSignataire(string $fonctionSignataire): static
+    public function setLibelle(string $libelle): static
     {
-        $this->fonctionSignataire = $fonctionSignataire;
-
-        return $this;
-    }
-
-    public function getDateSignature(): ?\DateTime
-    {
-        return $this->dateSignature;
-    }
-
-    public function setDateSignature(\DateTime $dateSignature): static
-    {
-        $this->dateSignature = $dateSignature;
+        $this->libelle = $libelle;
 
         return $this;
     }
